@@ -1,0 +1,47 @@
+#lang racket
+
+; ---------------------------------------------------------------------
+; Assoc Functions ( a-list, assoc )
+; EXAMPLE COMMANDS
+;
+; ( define al1 ( a-list '(one two three four) '(un duex trois quatre) ) )
+; ( define al2 ( a-list '(one two three) '( (1) (2 2) (3 3 3) ) ) )
+; al1
+; ( assoc 'two al1 )
+; ( assoc 'five al1 )
+; al2
+; ( assoc 'three al2 )
+; ( assoc 'four al2 )
+; 
+
+; ---------------------------------------------------------------------
+; Association-List Function
+;
+( define ( a-list eq-list1 eq-list2 )
+   ( cond
+      ( ( empty? eq-list1 )
+        ( list )
+      )
+      ( else
+        ( append ( list ( cons ( car eq-list1 ) ( car eq-list2 ) ) ) ( a-list ( cdr eq-list1 ) ( cdr eq-list2 ) ) )
+      )
+   )
+)
+
+; ---------------------------------------------------------------------
+; Assoc Function
+;
+
+( define ( assoc obj assoc-list )
+   ( cond
+      ( ( empty? assoc-list )
+        ( list )
+      )
+      ( ( equal? ( caar assoc-list ) obj )
+        ( car assoc-list )
+      )
+      ( else
+        ( assoc obj ( cdr assoc-list ) )
+      )
+   )
+)

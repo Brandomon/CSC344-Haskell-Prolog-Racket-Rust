@@ -1,0 +1,80 @@
+#lang racket
+; ---------------------------------------------------------------------
+; Program that mimics the "Preliminary Code" that consists of three functions,
+; each of which takes the form of a list of length 2:
+; (1) a function to display a random color of the given color list,
+; (2) a function to display all the colors of the given color list, and
+; (3) a function to display a select color of the given color list in the
+;     form of an integer between 1 and the length of the color list.
+;
+;  EXAMPLE COMMANDS
+;  ( random ( olivedrab dodgerblue indigo plum teal darkorange ) )
+;  ( all ( olivedrab dodgerblue indigo plum teal darkorange ) )
+;  ( 2 ( olivedrab dodgerblue indigo plum teal darkorange ) )
+;  ( random ( tomato peachpuff mediumaquamarine lightseagreen darkcyan darkslategray ) )
+;  ( all ( tomato peachpuff mediumaquamarine lightseagreen darkcyan darkslategray ) )
+;  ( 2 ( tomato peachpuff mediumaquamarine lightseagreen darkcyan darkslategray ) )
+;
+
+; ---------------------------------------------------------------------
+; Import the image library from Version 2 of "How to Design Programs"
+;
+(require 2htdp/image)
+
+
+; ---------------------------------------------------------------------
+; Color-thing definitions
+;
+( define ( color-thing )
+   ( display "(?): " )
+   ( define list ( read ) )
+   ( define command ( car list ) )
+   ( define color-list ( cadr list ) )
+; ---------------------------------------------------------------------
+; Command definitions
+;
+   ( define ( random-color )
+      ( display ( rectangle 500 30 "solid" ( list-ref color-list ( random ( length color-list ) ) ) ) )
+   )
+
+   ( define ( select-color )
+      ( display ( rectangle 500 30 "solid" ( list-ref color-list ( - command 1 ) ) ) )
+   )
+
+   ( define ( all-colors )
+      ( display ( paint-colors 0 ) )
+   )
+   ( define ( paint-colors n )
+      ( cond
+         ( ( = n ( - ( length color-list ) 1 ) )
+           ( display ( rectangle 500 30 "solid" ( list-ref color-list n ) ) )
+           ( display "\n" )
+           ( color-thing )
+         )
+         ( else
+           ( display ( rectangle 500 30 "solid" ( list-ref color-list n ) ) )
+           ( display "\n" )
+           ( paint-colors ( + n 1 ) )
+         )
+      )
+   )
+; ---------------------------------------------------------------------
+; Command conditions
+;
+   ( cond
+      ( ( equal? command 'random )
+        ( random-color )
+      )
+      ( ( equal? command 'all )
+        ( all-colors )
+      )
+      ( else
+        ( select-color )
+      )
+   )
+   ( display "\n" )
+; ---------------------------------------------------------------------
+; Recursive call to color-thing
+;
+   ( color-thing )
+)

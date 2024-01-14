@@ -1,0 +1,49 @@
+#lang racket
+
+; ---------------------------------------------------------------------
+; Menu-items Definition
+;
+
+( define menu-items '( steak grilledsalmon lemonade clubsoda cappuccino beignets ) )
+
+; ---------------------------------------------------------------------
+; Item-prices Definition
+;
+
+( define item-prices '( 23 19 3 2 2.5 7.5 ) )
+
+; ---------------------------------------------------------------------
+; A-list Function
+;
+
+( define ( a-list eq-list1 eq-list2 )
+   ( cond
+      ( ( empty? eq-list1 )
+        ( list )
+      )
+      ( else
+        ( append ( list ( cons ( car eq-list1 ) ( car eq-list2 ) ) ) ( a-list ( cdr eq-list1 ) ( cdr eq-list2 ) ) )
+      )
+   )
+)
+
+; ---------------------------------------------------------------------
+; Menu Definition
+;
+
+( define menu ( a-list menu-items item-prices ) )
+
+; ---------------------------------------------------------------------
+; Sales Definition
+;
+
+( define sales '( steak clubsoda grilledsalmon lemonade grilledsalmon clubsoda beignets cappuccino steak steak clubsoda steak lemonade beignets cappuccino beignets cappuccino grilledsalmon lemonade steak steak clubsoda beignets cappuccino beignets cappuccino steak lemonade steak lemonade ) )
+
+; ---------------------------------------------------------------------
+; Total Function
+; Must use filter and foldr once
+;
+
+( define ( total sales-list menu-item )
+   ( filter ( lambda (total) ( equal? ( sales-list menu-item ) sales-list ) ) )
+)

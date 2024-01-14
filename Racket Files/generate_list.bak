@@ -1,0 +1,40 @@
+#lang racket
+
+; ---------------------------------------------------------------------
+; Import the image library from Version 2 of "How to Design Programs"
+;
+(require 2htdp/image)
+
+; ---------------------------------------------------------------------
+; Preliminary Auxilary Code
+;
+
+( define ( roll-die ) ( + ( random 6 ) 1 ) )
+
+( define ( dot )
+   ( circle ( + 10 ( random 41 ) ) "solid" ( random-color ) )
+)
+( define ( random-color )
+   ( color ( rgb-value ) ( rgb-value ) ( rgb-value ) )
+)
+( define ( rgb-value )
+   ( random 256 )
+)
+( define ( sort-dots loc )
+   ( sort loc #:key image-width < )
+)
+
+; ---------------------------------------------------------------------
+; Generate-list Function
+;
+
+( define ( generate-list num funct )
+   ( cond
+      ( ( zero? num )
+        ( list )
+      )
+      ( else
+        ( append ( list ( funct ) ) ( generate-list ( - num 1 ) funct ) )
+      )
+   )
+)

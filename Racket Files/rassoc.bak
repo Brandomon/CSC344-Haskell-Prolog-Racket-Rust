@@ -1,0 +1,39 @@
+#lang racket
+
+; EXAMPLE COMMANDS
+;
+; ( define al1 ( a-list '(one two three four) '(un duex trois quatre) ) )
+; ( define al2 ( a-list '(one two three) '( (1) (2 2) (3 3 3) ) ) )
+; al1
+; ( rassoc 'three al1 )
+; ( rassoc 'trois al1 )
+; al2
+; ( rassoc '(1) al2 )
+; ( rassoc '(3 3 3) al2 )
+; ( rassoc 1 al2 )
+; 
+
+( define ( a-list eq-list1 eq-list2 )
+   ( cond
+      ( ( empty? eq-list1 )
+        ( list )
+      )
+      ( else
+        ( append ( list ( cons ( car eq-list1 ) ( car eq-list2 ) ) ) ( a-list ( cdr eq-list1 ) ( cdr eq-list2 ) ) )
+      )
+   )
+)
+
+( define ( rassoc obj rassoc-list )
+   ( cond
+      ( ( empty? rassoc-list )
+        ( list )
+      )
+      ( ( equal? ( cdr ( car rassoc-list ) ) obj )
+        ( car rassoc-list )
+      )
+      ( else
+        ( rassoc obj ( cdr rassoc-list ) )
+      )
+   )
+)

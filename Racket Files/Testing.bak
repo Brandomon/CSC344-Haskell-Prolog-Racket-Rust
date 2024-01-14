@@ -1,0 +1,33 @@
+#lang racket
+
+( require 2htdp/image )
+
+( define ( diamond side color1 color2 )
+   ( above
+     ( triangle side "solid" color1 )
+     ( rotate 180 ( triangle side "solid" color2 ) )
+   )
+)
+( define ( diamond-of-diamonds side )
+   ( overlay
+     ( above
+       ( diamond ( / side 2 ) "purple" "orange" )
+       ( diamond ( / side 2 ) "orange" "purple" )
+     )
+     ( beside
+       ( diamond ( / side 2 ) "red" "blue" )
+       ( diamond ( / side 2 ) "blue" "red" )
+     )
+   )
+)
+( define ( line n-squares side color1 color2 )
+  ( cond
+     ( ( = n-squares 0 )
+        ( display empty-image )
+     )
+     ( else
+        ( display ( square side "solid" color1 ) )
+        ( line ( - n-squares 1 ) side color2 color1 )
+     )
+  )
+)

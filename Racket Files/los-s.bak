@@ -1,0 +1,12 @@
+#lang racket
+
+( define ( los->s char-string-list )
+   ( cond
+      ( ( empty? char-string-list )
+        ( display "" )
+      )
+      ( else
+        ( string-append ( car char-string-list ) ( los->s ( cdr char-string-list ) ) )
+      )
+   )
+)

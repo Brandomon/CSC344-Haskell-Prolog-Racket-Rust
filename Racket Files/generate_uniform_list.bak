@@ -1,0 +1,15 @@
+#lang racket
+
+( define ( generate-uniform-list num obj )
+   ( cond
+      ( ( zero? num )
+        ( list )
+      )
+      ( ( = num 1 )
+        ( list obj )
+      )
+      ( else
+        ( append ( list obj ) ( generate-uniform-list ( - num 1 ) obj ) ) 
+      )
+   )
+)
